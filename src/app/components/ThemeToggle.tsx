@@ -1,14 +1,16 @@
 "use client";
 import { useTheme } from "@/providers/ThemeProvider";
+import { Sun, Moon } from "lucide-react";
 import React from "react";
 
-const ThemeToggle = () => {
+export const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
   return (
-    <button onClick={toggleTheme}>
-      Switch to {theme === "dark" ? "light" : "dark"}
+    <button
+      onClick={toggleTheme}
+      className="p-2 rounded-full text-white bg-gray-800/90 dark:text-black dark:bg-white hover:cursor-pointer"
+    >
+      {theme === "dark" ? <Sun /> : <Moon />}
     </button>
   );
 };
-
-export default ThemeToggle;
