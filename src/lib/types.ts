@@ -9,3 +9,9 @@ export type ThemeContextProps = {
   theme: Theme;
   toggleTheme: () => void;
 };
+
+export type NavLinkProps = {
+  href: string;
+  className?: string;
+  isActive?: boolean;
+};
