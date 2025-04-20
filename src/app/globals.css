@@ -1,9 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-/* 👇 Enables manual dark mode via `.dark` class */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* 🌱 Define raw color channels as CSS variables */
 @layer base {
   :root {
     --background: 224 247 250;
@@ -19,13 +18,15 @@
     --secondary: 0 188 212;
     --secondary-foreground: 255 255 255;
 
-    --muted: 206 240 245;
+    --muted: 180 220 230;
     --muted-foreground: 0 41 55;
+
 
     --accent: 128 222 234;
     --accent-foreground: 0 41 55;
 
-    --destructive: 239 68 68;
+    --destructive: 252, 165, 165;
+    --destructive-hover: 248, 113, 113;
     --destructive-foreground: 255 255 255;
 
     --ring: 3 169 244;
@@ -52,15 +53,13 @@
     --accent: 0 172 193;
     --accent-foreground: 255 255 255;
 
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-
     --ring: 128 222 234;
   }
 
    body {
     background-color: rgb(var(--background));
     color: rgb(var(--foreground));
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -74,6 +73,7 @@
     border: 1px solid rgb(var(--border));
     border-radius: var(--radius);
     padding: 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   button {
@@ -118,7 +118,10 @@
   --color-accent-foreground: rgb(var(--accent-foreground));
 
   --color-destructive: rgb(var(--destructive));
+  --color-destructive-hover: rgb(var(--destructive-hover));
   --color-destructive-foreground: rgb(var(--destructive-foreground));
 
   --color-ring: rgb(var(--ring));
+
+  --breakpoint-xs: 22rem;
 }
