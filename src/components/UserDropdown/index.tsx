@@ -9,10 +9,12 @@ import {
 import { ProfileDialog } from "@/components/UserDropdown/ProfileDialog";
 import { AuthDialog } from "@/components/UserDropdown/AuthDialog";
 import { User } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export function UserDropdown() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <>
@@ -26,9 +28,15 @@ export function UserDropdown() {
             Profile
           </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={() => setAuthOpen(true)}>
-            Logout
-          </DropdownMenuItem>
+          {session ? (
+            <DropdownMenuItem onClick={() => setAuthOpen(true)}>
+              Logout
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem onClick={() => setAuthOpen(true)}>
+              Signin
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
