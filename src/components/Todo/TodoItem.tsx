@@ -3,7 +3,8 @@
 import { Todo } from "@/lib/types";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 
 export function TodoItem({ todo }: { todo: Todo }) {
   const [isComplete, setIsComplete] = useState(todo.complete);
@@ -32,14 +33,18 @@ export function TodoItem({ todo }: { todo: Todo }) {
             {todo.title}
           </span>
         </div>
-        {todo.prompt && (
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
-            <Button className="w-24 cursor-pointer">Accept</Button>
-            <Button className="w-24 cursor-pointer bg-destructive hover:bg-destructive-hover">
-              Reject
-            </Button>
-          </div>
-        )}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+          {todo.prompt ? (
+            <>
+              <Button className="w-24 cursor-pointer">Accept</Button>
+              <Button className="w-24 cursor-pointer bg-destructive hover:bg-destructive-hover">
+                Reject
+              </Button>
+            </>
+          ) : (
+            <Trash2 className="h-8 w-8 hover:cursor-pointer text-primary" />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { TodosList } from "@/components/Todo/TodosList";
-import AddTodo from "../components/Todo/AddTodo";
+import AddTodo from "@/components/Todo/AddTodo";
 
 const todos = [
   {
