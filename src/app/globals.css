@@ -15,7 +15,7 @@
     --primary: 3 169 244;       /* Aqua */
     --primary-foreground: 255 255 255;
 
-    --secondary: 0 188 212;
+    --secondary: 148 163 184; 
     --secondary-foreground: 255 255 255;
 
     --muted: 180 220 230;
@@ -44,8 +44,9 @@
     --primary: 128 222 234;
     --primary-foreground: 0 30 40;
 
-    --secondary: 3 169 244;
-    --secondary-foreground: 0 30 40;
+    --secondary: 71 85 105; 
+    --secondary-foreground: 241 245 249; 
+
 
     --muted: 33 50 60;
     --muted-foreground: 164 202 212;

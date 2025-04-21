@@ -1,6 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { UserDropdown } from "@/components/UserDropdown/UserDropdown";
+import { UserDropdown } from "@/components/UserDropdown";
 
 export function Navbar() {
   return (
