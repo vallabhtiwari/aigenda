@@ -16,7 +16,7 @@ const AddTodo = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     setLoading(true);
-    const url = "/api/todo/add";
+    const url = "/api/todos/add";
     try {
       const parsedTitle = AddTodoSchema.parse(title);
       const resp = await axios.request({

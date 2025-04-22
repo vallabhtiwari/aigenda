@@ -76,7 +76,9 @@ export const AuthDialog = ({
       setLoading(false);
       setError(true);
       if (axios.isAxiosError(e)) {
-        toast.error(e.response?.data.error);
+        if (e.response?.data.error instanceof String)
+          toast.error(e.response?.data.error);
+        else toast.error("Something went wrong. Please try again.");
       } else if (e instanceof ZodError) {
         toast.error("Invalid Input");
       } else {

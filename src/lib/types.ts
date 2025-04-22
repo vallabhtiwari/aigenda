@@ -6,6 +6,9 @@ export type Todo = {
   title: string;
   prompt?: string;
   complete: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  userEmail: string;
 };
 
 export type Theme = "dark" | "light";
