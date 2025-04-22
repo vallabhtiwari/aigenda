@@ -1,4 +1,7 @@
-import { AuthOptions, getServerSession } from "next-auth";
+import { prisma } from "@/lib/db";
+import { AuthCreds } from "@/lib/types";
+import bcrypt from "bcryptjs";
+import { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
@@ -18,19 +21,21 @@ export const authOptions: AuthOptions = {
         },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
-
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+        const { email, password } = credentials as AuthCreds
+        if (email && password) {
+          const user = await prisma.user.findUnique({ where: { email } })
+          if (user && user.password) {
+            const verify = await bcrypt.compare(password, user.password)
+            if (verify) {
+              return user;
+            }
+          }
         }
+        return null;
       },
     }),
   ],
+  session: {
+    strategy: "jwt"
+  }
 };

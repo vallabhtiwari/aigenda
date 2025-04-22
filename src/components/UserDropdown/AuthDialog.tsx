@@ -9,12 +9,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { z } from "zod";
-import { signupSchema } from "@/lib/zodSchemas";
+import { signIn, signOut, useSession } from "next-auth/react";
+import React, { useState } from "react";
+import { ZodError } from "zod";
 import axios from "axios";
 import { toast } from "sonner";
+import { AuthCreds } from "@/lib/types";
+import { AuthSchema } from "@/lib/zodSchemas";
 
 export const AuthDialog = ({
   open,
@@ -28,7 +29,7 @@ export const AuthDialog = ({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [form, setForm] = useState<z.infer<typeof signupSchema>>({
+  const [form, setForm] = useState<AuthCreds>({
     email: "",
     password: "",
   });
@@ -43,24 +44,57 @@ export const AuthDialog = ({
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const url = isSignUp ? "/api/signup" : "";
     setLoading(true);
     setError(false);
     try {
-      const parsed = signupSchema.parse(form);
-      const resp = await axios.request({
-        url,
-        method: "POST",
-        data: parsed,
-      });
+      const parsed = AuthSchema.parse(form);
+      if (isSignUp) {
+        const url = "/api/signup";
+        const resp = await axios.request({
+          url,
+          method: "POST",
+          data: parsed,
+        });
+        toast.success("Signup Successful. Please Login.");
+      } else {
+        const resp = await signIn("credentials", {
+          redirect: false,
+          email: parsed.email,
+          password: parsed.password,
+        });
+        if (resp?.ok) {
+          toast.success("Login successful");
+          setOpen(false);
+        } else {
+          toast.error("Invalid credentials");
+        }
+      }
       setLoading(false);
       setIsSignUp(false);
       setForm({ email: "", password: "" });
     } catch (e) {
-      console.error(e);
       setLoading(false);
       setError(true);
+      if (axios.isAxiosError(e)) {
+        toast.error(e.response?.data.error);
+      } else if (e instanceof ZodError) {
+        toast.error("Invalid Input");
+      } else {
+        toast.error("Some error occurred. Please try again.");
+      }
     }
+  };
+
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await signOut({ redirect: false });
+      setOpen(false);
+    } catch {
+      toast.error("Some error occurred. Please try again");
+    }
+    setLoading(false);
   };
 
   if (session) {
@@ -77,7 +111,11 @@ export const AuthDialog = ({
             <Button variant="secondary" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button className="bg-destructive hover:bg-destructive-hover">
+            <Button
+              className="bg-destructive hover:bg-destructive-hover"
+              disabled={loading}
+              onClick={handleLogout}
+            >
               Logout
             </Button>
           </DialogFooter>
@@ -123,7 +161,7 @@ export const AuthDialog = ({
               ? "Already have an account? Sign In"
               : "New here? Sign Up"}
           </Button>
-          <Button onClick={handleSubmit}>
+          <Button onClick={handleSubmit} disabled={loading}>
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
         </DialogFooter>
