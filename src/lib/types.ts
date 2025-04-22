@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { AuthSchema } from "./zodSchemas";
+
 export type Todo = {
   id: string;
   title: string;
@@ -16,3 +19,5 @@ export type NavLinkProps = {
   className?: string;
   isActive?: boolean;
 };
+
+export type AuthCreds = z.infer<typeof AuthSchema>;
