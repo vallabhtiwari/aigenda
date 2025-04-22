@@ -133,7 +133,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Data/garage/personal/aigenda/src/generated/prisma",
+      "value": "/workspaces/aigenda/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -142,16 +142,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "debian-openssl-1.1.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Data/garage/personal/aigenda/prisma/schema.prisma",
+    "sourceFilePath": "/workspaces/aigenda/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -165,7 +165,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:postgres@localhost:5432/prisma_db"
+        "value": "postgresql://aigenda_owner:npg_xwpj8mWC1HqR@ep-bitter-dust-a430loa5-pooler.us-east-1.aws.neon.tech/aigenda?sslmode=require"
       }
     }
   },
@@ -209,8 +209,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
-path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
+path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-1.1.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")
