@@ -17,11 +17,11 @@ datasource db {
 model Todo {
   id        String   @id @default(cuid())
   title     String
-  completed Boolean
-  userId    String
+  completed Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
+  userEmail String
+  User      User     @relation(fields: [userEmail], references: [email])
 }
 
 model User {

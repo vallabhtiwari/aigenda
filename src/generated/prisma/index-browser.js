@@ -121,9 +121,9 @@ exports.Prisma.TodoScalarFieldEnum = {
   id: 'id',
   title: 'title',
   completed: 'completed',
-  userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userEmail: 'userEmail'
 };
 
 exports.Prisma.UserScalarFieldEnum = {

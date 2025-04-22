@@ -1004,27 +1004,27 @@ export namespace Prisma {
     id: string | null
     title: string | null
     completed: boolean | null
-    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    userEmail: string | null
   }
 
   export type TodoMaxAggregateOutputType = {
     id: string | null
     title: string | null
     completed: boolean | null
-    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    userEmail: string | null
   }
 
   export type TodoCountAggregateOutputType = {
     id: number
     title: number
     completed: number
-    userId: number
     createdAt: number
     updatedAt: number
+    userEmail: number
     _all: number
   }
 
@@ -1033,27 +1033,27 @@ export namespace Prisma {
     id?: true
     title?: true
     completed?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
+    userEmail?: true
   }
 
   export type TodoMaxAggregateInputType = {
     id?: true
     title?: true
     completed?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
+    userEmail?: true
   }
 
   export type TodoCountAggregateInputType = {
     id?: true
     title?: true
     completed?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
+    userEmail?: true
     _all?: true
   }
 
@@ -1133,9 +1133,9 @@ export namespace Prisma {
     id: string
     title: string
     completed: boolean
-    userId: string
     createdAt: Date
     updatedAt: Date
+    userEmail: string
     _count: TodoCountAggregateOutputType | null
     _min: TodoMinAggregateOutputType | null
     _max: TodoMaxAggregateOutputType | null
@@ -1159,9 +1159,9 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     completed?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userEmail?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["todo"]>
 
@@ -1169,9 +1169,9 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     completed?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userEmail?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["todo"]>
 
@@ -1179,9 +1179,9 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     completed?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userEmail?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["todo"]>
 
@@ -1189,12 +1189,12 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     completed?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userEmail?: boolean
   }
 
-  export type TodoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "completed" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["todo"]>
+  export type TodoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "completed" | "createdAt" | "updatedAt" | "userEmail", ExtArgs["result"]["todo"]>
   export type TodoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -1214,9 +1214,9 @@ export namespace Prisma {
       id: string
       title: string
       completed: boolean
-      userId: string
       createdAt: Date
       updatedAt: Date
+      userEmail: string
     }, ExtArgs["result"]["todo"]>
     composites: {}
   }
@@ -1644,9 +1644,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Todo", 'String'>
     readonly title: FieldRef<"Todo", 'String'>
     readonly completed: FieldRef<"Todo", 'Boolean'>
-    readonly userId: FieldRef<"Todo", 'String'>
     readonly createdAt: FieldRef<"Todo", 'DateTime'>
     readonly updatedAt: FieldRef<"Todo", 'DateTime'>
+    readonly userEmail: FieldRef<"Todo", 'String'>
   }
     
 
@@ -3149,9 +3149,9 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     completed: 'completed',
-    userId: 'userId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    userEmail: 'userEmail'
   };
 
   export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum]
@@ -3248,9 +3248,9 @@ export namespace Prisma {
     id?: StringFilter<"Todo"> | string
     title?: StringFilter<"Todo"> | string
     completed?: BoolFilter<"Todo"> | boolean
-    userId?: StringFilter<"Todo"> | string
     createdAt?: DateTimeFilter<"Todo"> | Date | string
     updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    userEmail?: StringFilter<"Todo"> | string
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -3258,9 +3258,9 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     completed?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userEmail?: SortOrder
     User?: UserOrderByWithRelationInput
   }
 
@@ -3271,9 +3271,9 @@ export namespace Prisma {
     NOT?: TodoWhereInput | TodoWhereInput[]
     title?: StringFilter<"Todo"> | string
     completed?: BoolFilter<"Todo"> | boolean
-    userId?: StringFilter<"Todo"> | string
     createdAt?: DateTimeFilter<"Todo"> | Date | string
     updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    userEmail?: StringFilter<"Todo"> | string
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -3281,9 +3281,9 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     completed?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userEmail?: SortOrder
     _count?: TodoCountOrderByAggregateInput
     _max?: TodoMaxOrderByAggregateInput
     _min?: TodoMinOrderByAggregateInput
@@ -3296,9 +3296,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Todo"> | string
     title?: StringWithAggregatesFilter<"Todo"> | string
     completed?: BoolWithAggregatesFilter<"Todo"> | boolean
-    userId?: StringWithAggregatesFilter<"Todo"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Todo"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Todo"> | Date | string
+    userEmail?: StringWithAggregatesFilter<"Todo"> | string
   }
 
   export type UserWhereInput = {
@@ -3359,7 +3359,7 @@ export namespace Prisma {
   export type TodoCreateInput = {
     id?: string
     title: string
-    completed: boolean
+    completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     User: UserCreateNestedOneWithoutTodoInput
@@ -3368,10 +3368,10 @@ export namespace Prisma {
   export type TodoUncheckedCreateInput = {
     id?: string
     title: string
-    completed: boolean
-    userId: string
+    completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    userEmail: string
   }
 
   export type TodoUpdateInput = {
@@ -3387,18 +3387,18 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     completed?: BoolFieldUpdateOperationsInput | boolean
-    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userEmail?: StringFieldUpdateOperationsInput | string
   }
 
   export type TodoCreateManyInput = {
     id?: string
     title: string
-    completed: boolean
-    userId: string
+    completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    userEmail: string
   }
 
   export type TodoUpdateManyMutationInput = {
@@ -3413,9 +3413,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     completed?: BoolFieldUpdateOperationsInput | boolean
-    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userEmail?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateInput = {
@@ -3518,27 +3518,27 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     completed?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userEmail?: SortOrder
   }
 
   export type TodoMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     completed?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userEmail?: SortOrder
   }
 
   export type TodoMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     completed?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userEmail?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -3814,7 +3814,7 @@ export namespace Prisma {
   export type TodoCreateWithoutUserInput = {
     id?: string
     title: string
-    completed: boolean
+    completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3822,7 +3822,7 @@ export namespace Prisma {
   export type TodoUncheckedCreateWithoutUserInput = {
     id?: string
     title: string
-    completed: boolean
+    completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3860,15 +3860,15 @@ export namespace Prisma {
     id?: StringFilter<"Todo"> | string
     title?: StringFilter<"Todo"> | string
     completed?: BoolFilter<"Todo"> | boolean
-    userId?: StringFilter<"Todo"> | string
     createdAt?: DateTimeFilter<"Todo"> | Date | string
     updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    userEmail?: StringFilter<"Todo"> | string
   }
 
   export type TodoCreateManyUserInput = {
     id?: string
     title: string
-    completed: boolean
+    completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
