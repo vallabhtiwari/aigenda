@@ -21,11 +21,11 @@ export const authOptions: AuthOptions = {
         },
       },
       async authorize(credentials, req) {
-        const { email, password } = credentials as AuthCreds
+        const { email, password } = credentials as AuthCreds;
         if (email && password) {
-          const user = await prisma.user.findUnique({ where: { email } })
+          const user = await prisma.user.findUnique({ where: { email } });
           if (user && user.password) {
-            const verify = await bcrypt.compare(password, user.password)
+            const verify = await bcrypt.compare(password, user.password);
             if (verify) {
               return user;
             }
@@ -36,6 +36,6 @@ export const authOptions: AuthOptions = {
     }),
   ],
   session: {
-    strategy: "jwt"
-  }
+    strategy: "jwt",
+  },
 };
