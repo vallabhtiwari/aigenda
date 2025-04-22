@@ -5,12 +5,24 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export function TodoItem({ todo }: { todo: Todo }) {
   const [isComplete, setIsComplete] = useState(todo.complete);
+  const router = useRouter();
 
-  const handleToggle = () => {
-    setIsComplete(!isComplete);
+  const handleToggle = async () => {
+    const url = "/api/todos/update";
+    try {
+      const resp = await axios.request({
+        url,
+        method: "POST",
+        data: { id: todo.id, title: todo.title, complete: !isComplete },
+      });
+      setIsComplete(!isComplete);
+      // router.refresh();
+    } catch {}
   };
 
   return (

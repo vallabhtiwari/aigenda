@@ -6,3 +6,8 @@ export const AuthSchema = z.object({
 });
 
 export const AddTodoSchema = z.string().min(1);
+export const UpdateTodoSchema = z.object({
+  id: z.string().cuid(),
+  title: z.string().optional(),
+  complete: z.boolean().optional(),
+});
