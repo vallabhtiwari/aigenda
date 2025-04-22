@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/db";
-import { signupSchema } from "@/lib/zodSchemas";
+import { AuthSchema } from "@/lib/zodSchemas";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
   console.log("ENTERED");
   const body = await req.json();
-  const safePayload = signupSchema.safeParse(body);
+  const safePayload = AuthSchema.safeParse(body);
   if (!safePayload.success) {
     return NextResponse.json(
       { error: safePayload.error.format() },
