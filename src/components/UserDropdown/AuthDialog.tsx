@@ -49,7 +49,7 @@ export const AuthDialog = ({
     try {
       const parsed = AuthSchema.parse(form);
       if (isSignUp) {
-        const url = "/api/signup";
+        const url = "/api/auth/signup";
         const resp = await axios.request({
           url,
           method: "POST",
