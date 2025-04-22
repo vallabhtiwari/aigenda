@@ -24,9 +24,11 @@ export function UserDropdown() {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="m-2 p-2 bg-muted/80 border-primary">
-          <DropdownMenuItem onClick={() => setProfileOpen(true)}>
-            Profile
-          </DropdownMenuItem>
+          {session && (
+            <DropdownMenuItem onClick={() => setProfileOpen(true)}>
+              Profile
+            </DropdownMenuItem>
+          )}
 
           {session ? (
             <DropdownMenuItem onClick={() => setAuthOpen(true)}>
