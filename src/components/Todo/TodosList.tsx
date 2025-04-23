@@ -3,6 +3,7 @@ import { TodoItem } from "@/components/Todo/TodoItem";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { prisma } from "@/lib/db";
+import { TodoListClient } from "./TodoListClient";
 
 export async function TodosList() {
   let todos: Todo[] = [];
@@ -15,11 +16,5 @@ export async function TodosList() {
     });
   }
   console.log(todos);
-  return (
-    <div>
-      {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} />
-      ))}
-    </div>
-  );
+  return <TodoListClient initialTodos={todos} />;
 }
