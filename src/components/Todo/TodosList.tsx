@@ -15,6 +15,5 @@ export async function TodosList() {
       where: { userEmail: session.user.email },
     });
   }
-  console.log(todos);
   return <TodoListClient initialTodos={todos} />;
 }
