@@ -7,8 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
-export function TodoItem({ todo, onEdit }: { todo: Todo; onEdit: () => void }) {
+type TodoItemProps = {
+  todo: Todo;
+  onEdit: () => void;
+  onDelete: (id: string) => void;
+};
+export function TodoItem({ todo, onEdit, onDelete }: TodoItemProps) {
   const [isComplete, setIsComplete] = useState(todo.complete);
 
   const handleToggle = async () => {
@@ -21,6 +27,22 @@ export function TodoItem({ todo, onEdit }: { todo: Todo; onEdit: () => void }) {
       });
       setIsComplete(!isComplete);
     } catch {}
+  };
+
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const url = "/api/todos/delete";
+    try {
+      const resp = await axios.request({
+        url,
+        method: "DELETE",
+        data: { id: todo.id },
+      });
+      onDelete(todo.id);
+      toast.success("Todo deleted successfully.");
+    } catch {
+      toast.error("Somthing went wrong. Please try again.");
+    }
   };
 
   return (
@@ -57,7 +79,10 @@ export function TodoItem({ todo, onEdit }: { todo: Todo; onEdit: () => void }) {
                 className="h-8 w-8 text-primary cursor-pointer"
                 onClick={onEdit}
               />
-              <Trash2 className="h-8 w-8 hover:cursor-pointer text-destructive-hover" />
+              <Trash2
+                className="h-8 w-8 hover:cursor-pointer text-destructive-hover"
+                onClick={handleDelete}
+              />
             </div>
           )}
         </div>

@@ -19,6 +19,9 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
     else addTodo(todo);
     setEditingTodo(null);
   };
+  const handleDelete = (id: string) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
 
   return (
     <>
@@ -33,6 +36,7 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
             key={todo.id}
             todo={todo}
             onEdit={() => setEditingTodo(todo)}
+            onDelete={handleDelete}
           />
         );
       })}
