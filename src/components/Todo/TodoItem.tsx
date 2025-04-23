@@ -75,7 +75,7 @@ export function TodoItem({ todo, onEdit, onDelete, onToggle }: TodoItemProps) {
               </Button>
             </>
           ) : (
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div className="flex flex-row justify-between items-center gap-6">
               <Pencil
                 className="h-8 w-8 text-primary cursor-pointer"
                 onClick={onEdit}
