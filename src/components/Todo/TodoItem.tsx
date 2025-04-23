@@ -13,20 +13,21 @@ type TodoItemProps = {
   todo: Todo;
   onEdit: () => void;
   onDelete: (id: string) => void;
+  onToggle: (id: string) => void;
 };
-export function TodoItem({ todo, onEdit, onDelete }: TodoItemProps) {
-  const [isComplete, setIsComplete] = useState(todo.complete);
-
+export function TodoItem({ todo, onEdit, onDelete, onToggle }: TodoItemProps) {
   const handleToggle = async () => {
     const url = "/api/todos/update";
     try {
       const resp = await axios.request({
         url,
         method: "POST",
-        data: { id: todo.id, complete: !isComplete },
+        data: { id: todo.id, complete: !todo.complete },
       });
-      setIsComplete(!isComplete);
-    } catch {}
+      onToggle(todo.id);
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    }
   };
 
   const handleDelete = async (e: React.FormEvent) => {
@@ -49,7 +50,7 @@ export function TodoItem({ todo, onEdit, onDelete }: TodoItemProps) {
     <div className="p-4 flex items-center gap-4">
       <Input
         type="checkbox"
-        checked={isComplete}
+        checked={todo.complete}
         onChange={handleToggle}
         className="w-6 h-6 rounded-lg"
       />
@@ -58,7 +59,7 @@ export function TodoItem({ todo, onEdit, onDelete }: TodoItemProps) {
           <span>{todo.prompt}</span>
           <span
             className={cn(
-              isComplete ? "line-through text-muted" : "text-primary",
+              todo.complete ? "line-through text-muted" : "text-primary",
               "text-2xl"
             )}
           >
