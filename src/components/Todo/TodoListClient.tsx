@@ -16,7 +16,7 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
       prev.map((todo) => (todo.id === updated.id ? updated : todo))
     );
 
-  const handlSave = (todo: Todo) => {
+  const handleSave = (todo: Todo) => {
     if (editingTodo) updateTodo(todo);
     else addTodo(todo);
     setEditingTodo(null);
@@ -38,11 +38,13 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
     <>
       <TodoForm
         todo={editingTodo || undefined}
-        onSave={handlSave}
+        onSave={handleSave}
         onCancelEdit={() => setEditingTodo(null)}
       />
-      {todos.map((todo) => {
-        return (
+      {todos.length === 0 ? (
+        <p className="text-muted text-xl p-4 text-center">No todos yet!</p>
+      ) : (
+        todos.map((todo) => (
           <TodoItem
             key={todo.id}
             todo={todo}
@@ -50,8 +52,8 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
             onDelete={handleDelete}
             onToggle={handleToggle}
           />
-        );
-      })}
+        ))
+      )}
     </>
   );
 };

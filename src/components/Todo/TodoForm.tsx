@@ -50,7 +50,7 @@ export const TodoForm = ({ todo, onSave, onCancelEdit }: TodoFormProps) => {
       todo ? toast.success("Todo Updated") : toast.success("Todo Added");
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        if (e.response?.data.error instanceof String)
+        if (typeof e.response?.data.error === "string")
           toast.error(e.response?.data.error);
         else toast.error("Something went wrong. Please try again.");
       } else if (e instanceof ZodError) {
