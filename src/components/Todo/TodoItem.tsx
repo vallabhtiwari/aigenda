@@ -6,11 +6,10 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
 
 export function TodoItem({ todo, onEdit }: { todo: Todo; onEdit: () => void }) {
   const [isComplete, setIsComplete] = useState(todo.complete);
-  const router = useRouter();
 
   const handleToggle = async () => {
     const url = "/api/todos/update";
@@ -18,16 +17,15 @@ export function TodoItem({ todo, onEdit }: { todo: Todo; onEdit: () => void }) {
       const resp = await axios.request({
         url,
         method: "POST",
-        data: { id: todo.id, title: todo.title, complete: !isComplete },
+        data: { id: todo.id, complete: !isComplete },
       });
       setIsComplete(!isComplete);
-      // router.refresh();
     } catch {}
   };
 
   return (
     <div className="p-4 flex items-center gap-4">
-      <input
+      <Input
         type="checkbox"
         checked={isComplete}
         onChange={handleToggle}
@@ -59,7 +57,7 @@ export function TodoItem({ todo, onEdit }: { todo: Todo; onEdit: () => void }) {
                 className="h-8 w-8 text-primary cursor-pointer"
                 onClick={onEdit}
               />
-              <Trash2 className="h-8 w-8 hover:cursor-pointer text-primary" />
+              <Trash2 className="h-8 w-8 hover:cursor-pointer text-destructive-hover" />
             </div>
           )}
         </div>

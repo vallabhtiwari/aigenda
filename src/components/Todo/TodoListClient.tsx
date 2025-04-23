@@ -2,8 +2,8 @@
 
 import { Todo } from "@/lib/types";
 import { useState } from "react";
-import { TodoItem } from "./TodoItem";
-import { TodoForm } from "./TodoForm";
+import { TodoItem } from "@/components/Todo/TodoItem";
+import { TodoForm } from "@/components/Todo/TodoForm";
 export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
   const [todos, setTodos] = useState(initialTodos);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
