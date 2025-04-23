@@ -4,11 +4,11 @@ import { Todo } from "@/lib/types";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-export function TodoItem({ todo }: { todo: Todo }) {
+export function TodoItem({ todo, onEdit }: { todo: Todo; onEdit: () => void }) {
   const [isComplete, setIsComplete] = useState(todo.complete);
   const router = useRouter();
 
@@ -54,7 +54,13 @@ export function TodoItem({ todo }: { todo: Todo }) {
               </Button>
             </>
           ) : (
-            <Trash2 className="h-8 w-8 hover:cursor-pointer text-primary" />
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
+              <Pencil
+                className="h-8 w-8 text-primary cursor-pointer"
+                onClick={onEdit}
+              />
+              <Trash2 className="h-8 w-8 hover:cursor-pointer text-primary" />
+            </div>
           )}
         </div>
       </div>
