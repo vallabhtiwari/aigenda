@@ -22,7 +22,11 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
 
   return (
     <>
-      <TodoForm todo={editingTodo || undefined} onSave={handlSave} />
+      <TodoForm
+        todo={editingTodo || undefined}
+        onSave={handlSave}
+        onCancelEdit={() => setEditingTodo(null)}
+      />
       {todos.map((todo) => {
         return (
           <TodoItem

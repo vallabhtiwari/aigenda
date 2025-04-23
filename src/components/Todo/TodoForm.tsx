@@ -12,9 +12,10 @@ import { Todo } from "@/lib/types";
 type TodoFormProps = {
   todo?: Todo;
   onSave?: (todo: Todo) => void;
+  onCancelEdit?: () => void;
 };
 
-export const TodoForm = ({ todo, onSave }: TodoFormProps) => {
+export const TodoForm = ({ todo, onSave, onCancelEdit }: TodoFormProps) => {
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -83,8 +84,8 @@ export const TodoForm = ({ todo, onSave }: TodoFormProps) => {
       </Button>
       {todo && (
         <Button
-          className="w-full text-2xl sm:w-28 cursor-pointer px-2 py-6"
-          variant="destructive"
+          onClick={onCancelEdit}
+          className="w-full text-2xl sm:w-28 cursor-pointer px-2 py-6 bg-destructive hover:bg-destructive-hover"
         >
           Cancel
         </Button>
