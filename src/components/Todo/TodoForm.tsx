@@ -8,20 +8,25 @@ import { AddTodoSchema } from "@/lib/zodSchemas";
 import { ZodError } from "zod";
 import { toast } from "sonner";
 import { Todo } from "@/lib/types";
+import { useTodoStore } from "@/store/todoStore";
 
-type TodoFormProps = {
-  todo?: Todo;
-  onSave?: (todo: Todo) => void;
-  onCancelEdit?: () => void;
-};
-
-export const TodoForm = ({ todo, onSave, onCancelEdit }: TodoFormProps) => {
+export const TodoForm = ({ editingTodo }: { editingTodo?: Todo }) => {
+  const { setEditingTodo, updateTodo, addTodo } = useTodoStore();
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    setTitle(todo?.title || "");
-  }, [todo]);
+    setTitle(editingTodo?.title || "");
+  }, [editingTodo]);
+
+  const handleSave = (savedTodo: Todo) => {
+    if (editingTodo) {
+      updateTodo(savedTodo);
+    } else {
+      addTodo(savedTodo);
+    }
+    setEditingTodo(null);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -32,9 +37,9 @@ export const TodoForm = ({ todo, onSave, onCancelEdit }: TodoFormProps) => {
     try {
       let url, data;
       const parsedTitle = AddTodoSchema.parse(title);
-      if (todo) {
+      if (editingTodo) {
         url = "/api/todos/update";
-        data = { id: todo.id, title: parsedTitle };
+        data = { id: editingTodo.id, title: parsedTitle };
       } else {
         url = "/api/todos/add";
         data = { title: parsedTitle };
@@ -45,9 +50,9 @@ export const TodoForm = ({ todo, onSave, onCancelEdit }: TodoFormProps) => {
         data,
       });
       const savedTodo = resp.data.todo;
-      if (onSave) onSave(savedTodo);
+      handleSave(savedTodo);
       setTitle("");
-      todo ? toast.success("Todo Updated") : toast.success("Todo Added");
+      editingTodo ? toast.success("Todo Updated") : toast.success("Todo Added");
     } catch (e) {
       if (axios.isAxiosError(e)) {
         if (typeof e.response?.data.error === "string")
@@ -80,11 +85,11 @@ export const TodoForm = ({ todo, onSave, onCancelEdit }: TodoFormProps) => {
         className="w-full text-2xl sm:w-28 cursor-pointer px-2 py-6"
         disabled={loading}
       >
-        {todo ? "Update" : "Add"}
+        {editingTodo ? "Update" : "Add"}
       </Button>
-      {todo && (
+      {editingTodo && (
         <Button
-          onClick={onCancelEdit}
+          onClick={() => setEditingTodo(editingTodo)}
           className="w-full text-2xl sm:w-28 cursor-pointer px-2 py-6 bg-destructive hover:bg-destructive-hover"
         >
           Cancel
