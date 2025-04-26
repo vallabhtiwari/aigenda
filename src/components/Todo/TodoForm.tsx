@@ -10,8 +10,8 @@ import { toast } from "sonner";
 import { Todo } from "@/lib/types";
 import { useTodoStore } from "@/store/todoStore";
 
-export const TodoForm = ({ editingTodo }: { editingTodo?: Todo }) => {
-  const { setEditingTodo, updateTodo, addTodo } = useTodoStore();
+export const TodoForm = () => {
+  const { editingTodo, setEditingTodo, updateTodo, addTodo } = useTodoStore();
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -33,6 +33,7 @@ export const TodoForm = ({ editingTodo }: { editingTodo?: Todo }) => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!title) return;
     setLoading(true);
     try {
       let url, data;
@@ -89,7 +90,8 @@ export const TodoForm = ({ editingTodo }: { editingTodo?: Todo }) => {
       </Button>
       {editingTodo && (
         <Button
-          onClick={() => setEditingTodo(editingTodo)}
+          type="button"
+          onClick={() => setEditingTodo(null)}
           className="w-full text-2xl sm:w-28 cursor-pointer px-2 py-6 bg-destructive hover:bg-destructive-hover"
         >
           Cancel

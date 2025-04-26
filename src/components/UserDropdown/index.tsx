@@ -37,17 +37,26 @@ export function UserDropdown() {
           </DropdownMenuItem>
 
           {session && (
-            <DropdownMenuItem onClick={() => setProfileOpen(true)}>
+            <DropdownMenuItem
+              onClick={() => setProfileOpen(true)}
+              className="cursor-pointer"
+            >
               Profile
             </DropdownMenuItem>
           )}
 
           {session ? (
-            <DropdownMenuItem onClick={() => setAuthOpen(true)}>
+            <DropdownMenuItem
+              onClick={() => setAuthOpen(true)}
+              className="cursor-pointer"
+            >
               Logout
             </DropdownMenuItem>
           ) : (
-            <DropdownMenuItem onClick={() => setAuthOpen(true)}>
+            <DropdownMenuItem
+              onClick={() => setAuthOpen(true)}
+              className="cursor-pointer"
+            >
               Signin
             </DropdownMenuItem>
           )}

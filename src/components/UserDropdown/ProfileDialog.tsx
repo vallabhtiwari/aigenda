@@ -26,7 +26,9 @@ export const ProfileDialog = ({
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!(form.newpassword && form.oldpassword)) return;
     setLoading(true);
     const url = "/api/auth/password-update";
     try {
@@ -56,37 +58,39 @@ export const ProfileDialog = ({
             Make changes to your profile here.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Old Password
-            </Label>
-            <Input
-              type="password"
-              name="oldpassword"
-              value={form.oldpassword}
-              onChange={handleChange}
-              className="col-span-3 bg-input"
-            />
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Old Password
+              </Label>
+              <Input
+                type="password"
+                name="oldpassword"
+                value={form.oldpassword}
+                onChange={handleChange}
+                className="col-span-3 bg-input"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                New Password
+              </Label>
+              <Input
+                type="password"
+                name="newpassword"
+                value={form.newpassword}
+                onChange={handleChange}
+                className="col-span-3 bg-input"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              New Password
-            </Label>
-            <Input
-              type="password"
-              name="newpassword"
-              value={form.newpassword}
-              onChange={handleChange}
-              className="col-span-3 bg-input"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button onClick={handleSubmit} disabled={loading}>
-            Save changes
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="submit" disabled={loading} className="cursor-pointer">
+              Save changes
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

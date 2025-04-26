@@ -46,6 +46,7 @@ export const AuthDialog = ({
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!(form.email && form.password)) return;
     setLoading(true);
     setError(false);
     try {
@@ -114,11 +115,15 @@ export const AuthDialog = ({
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex justify-end gap-2">
-            <Button variant="secondary" onClick={() => setOpen(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => setOpen(false)}
+              className="cursor-pointer"
+            >
               Cancel
             </Button>
             <Button
-              className="bg-destructive hover:bg-destructive-hover"
+              className="bg-destructive hover:bg-destructive-hover cursor-pointer"
               disabled={loading}
               onClick={handleLogout}
             >
@@ -142,35 +147,42 @@ export const AuthDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <Input
-            className="bg-input"
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-          />
-          <Input
-            className="bg-input"
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <Input
+              className="bg-input"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+            />
+            <Input
+              className="bg-input"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+            />
+          </div>
 
-        <DialogFooter className="flex flex-col gap-2 mt-4">
-          <Button onClick={toggleMode} variant="secondary">
-            {isSignUp
-              ? "Already have an account? Sign In"
-              : "New here? Sign Up"}
-          </Button>
-          <Button onClick={handleSubmit} disabled={loading}>
-            {isSignUp ? "Sign Up" : "Sign In"}
-          </Button>
-        </DialogFooter>
+          <DialogFooter className="flex flex-col gap-2 mt-4">
+            <Button
+              type="button"
+              onClick={toggleMode}
+              variant="secondary"
+              className="cursor-pointer"
+            >
+              {isSignUp
+                ? "Already have an account? Sign In"
+                : "New here? Sign Up"}
+            </Button>
+            <Button type="submit" disabled={loading} className="cursor-pointer">
+              {isSignUp ? "Sign Up" : "Sign In"}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
