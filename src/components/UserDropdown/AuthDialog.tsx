@@ -16,6 +16,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { AuthCreds } from "@/lib/types";
 import { AuthSchema } from "@/lib/zodSchemas";
+import { useRouter } from "next/navigation";
 
 export const AuthDialog = ({
   open,
@@ -33,6 +34,7 @@ export const AuthDialog = ({
     email: "",
     password: "",
   });
+  const router = useRouter();
 
   const toggleMode = () => {
     setForm({ email: "", password: "" });
@@ -65,6 +67,7 @@ export const AuthDialog = ({
         if (resp?.ok) {
           toast.success("Login successful");
           setOpen(false);
+          router.push("/");
         } else {
           toast.error("Invalid credentials");
         }
@@ -93,6 +96,7 @@ export const AuthDialog = ({
     try {
       await signOut({ redirect: false });
       setOpen(false);
+      router.push("/");
     } catch {
       toast.error("Some error occurred. Please try again");
     }

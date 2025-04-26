@@ -1,21 +1,16 @@
 "use client";
 
 import { Todo } from "@/lib/types";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useTodoStore } from "@/store/todoStore";
 
-type TodoItemProps = {
-  todo: Todo;
-  onEdit: () => void;
-  onDelete: (id: string) => void;
-  onToggle: (id: string) => void;
-};
-export function TodoItem({ todo, onEdit, onDelete, onToggle }: TodoItemProps) {
+export function TodoItem({ todo }: { todo: Todo }) {
+  const { setEditingTodo, deleteTodo, toggleTodo } = useTodoStore();
   const handleToggle = async () => {
     const url = "/api/todos/update";
     try {
@@ -24,7 +19,7 @@ export function TodoItem({ todo, onEdit, onDelete, onToggle }: TodoItemProps) {
         method: "POST",
         data: { id: todo.id, complete: !todo.complete },
       });
-      onToggle(todo.id);
+      toggleTodo(todo.id);
     } catch {
       toast.error("Something went wrong. Please try again.");
     }
@@ -39,7 +34,7 @@ export function TodoItem({ todo, onEdit, onDelete, onToggle }: TodoItemProps) {
         method: "DELETE",
         data: { id: todo.id },
       });
-      onDelete(todo.id);
+      deleteTodo(todo.id);
       toast.success("Todo deleted successfully.");
     } catch {
       toast.error("Somthing went wrong. Please try again.");
@@ -78,7 +73,7 @@ export function TodoItem({ todo, onEdit, onDelete, onToggle }: TodoItemProps) {
             <div className="flex flex-row justify-between items-center gap-6">
               <Pencil
                 className="h-8 w-8 text-primary cursor-pointer"
-                onClick={onEdit}
+                onClick={() => setEditingTodo(todo)}
               />
               <Trash2
                 className="h-8 w-8 hover:cursor-pointer text-destructive-hover"
