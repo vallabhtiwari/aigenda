@@ -10,7 +10,13 @@ import { toast } from "sonner";
 import { useTodoStore } from "@/store/todoStore";
 
 export function TodoItem({ todo }: { todo: Todo }) {
-  const { setEditingTodo, deleteTodo, toggleTodo } = useTodoStore();
+  const {
+    setEditingTodo,
+    deleteTodo,
+    toggleTodo,
+    addTodo,
+    deleteSuggestedTodo,
+  } = useTodoStore();
   const handleToggle = async () => {
     const url = "/api/todos/update";
     try {
@@ -25,8 +31,7 @@ export function TodoItem({ todo }: { todo: Todo }) {
     }
   };
 
-  const handleDelete = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleDelete = async () => {
     const url = "/api/todos/delete";
     try {
       const resp = await axios.request({
@@ -40,6 +45,25 @@ export function TodoItem({ todo }: { todo: Todo }) {
       toast.error("Somthing went wrong. Please try again.");
     }
   };
+
+  const handleAccept = async () => {
+    const url = "/api/todos/add";
+    try {
+      const resp = await axios.request({
+        url,
+        method: "POST",
+        data: { title: todo.title },
+      });
+      const savedTodo = resp.data.todo;
+      addTodo(savedTodo);
+      deleteSuggestedTodo(todo.id);
+      toast.success("Suggested Todo Added");
+    } catch {
+      toast.error("Something went wrong. Please try again");
+    }
+  };
+
+  const handleReject = () => deleteSuggestedTodo(todo.id);
 
   return (
     <div className="p-4 flex items-center gap-4">
@@ -64,8 +88,13 @@ export function TodoItem({ todo }: { todo: Todo }) {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
           {todo.prompt ? (
             <>
-              <Button className="w-24 cursor-pointer">Accept</Button>
-              <Button className="w-24 cursor-pointer bg-destructive hover:bg-destructive-hover">
+              <Button onClick={handleAccept} className="w-24 cursor-pointer">
+                Accept
+              </Button>
+              <Button
+                onClick={handleReject}
+                className="w-24 cursor-pointer bg-destructive hover:bg-destructive-hover"
+              >
                 Reject
               </Button>
             </>

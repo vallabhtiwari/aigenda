@@ -11,26 +11,32 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
     useTodoStore();
   useEffect(() => {
     setInitialTodos(initialTodos);
-    async function fetchSuggestions() {
-      try {
-        const pos = await new Promise<GeolocationPosition>((resolve, reject) =>
-          navigator.geolocation.getCurrentPosition(resolve, reject)
-        );
-        const { latitude, longitude } = pos.coords;
-        const suggestions = await generatedSuggestedTodos({
-          latitude,
-          longitude,
-        });
-        if (suggestions) {
-          setSuggestedTodos(suggestions);
-        }
-      } catch (error) {
-        console.error("Failed to fetch AI suggestions", error);
-      }
-    }
-
-    fetchSuggestions();
   }, [initialTodos, setInitialTodos]);
+
+  useEffect(() => {
+    if (suggestedTodos && suggestedTodos.length === 0) {
+      async function fetchSuggestions() {
+        try {
+          const pos = await new Promise<GeolocationPosition>(
+            (resolve, reject) =>
+              navigator.geolocation.getCurrentPosition(resolve, reject)
+          );
+          const { latitude, longitude } = pos.coords;
+          const suggestions = await generatedSuggestedTodos({
+            latitude,
+            longitude,
+          });
+          if (suggestions) {
+            setSuggestedTodos(suggestions);
+          }
+        } catch (error) {
+          console.error("Failed to fetch AI suggestions", error);
+        }
+      }
+
+      fetchSuggestions();
+    }
+  }, [suggestedTodos, setSuggestedTodos]);
 
   return (
     <>

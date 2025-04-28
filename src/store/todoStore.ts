@@ -14,6 +14,7 @@ export type TodoActions = {
   addTodo: (todo: Todo) => void;
   updateTodo: (todo: Todo) => void;
   deleteTodo: (id: string) => void;
+  deleteSuggestedTodo: (id: string) => void;
   toggleTodo: (id: string) => void;
   reset: () => void;
 };
@@ -40,6 +41,10 @@ export const useTodoStore = create<TodoStore>((set) => ({
   deleteTodo: (id) =>
     set((state) => ({
       todos: state.todos.filter((item) => item.id !== id),
+    })),
+  deleteSuggestedTodo: (id) =>
+    set((state) => ({
+      suggestedTodos: state.suggestedTodos?.filter((item) => item.id !== id),
     })),
   toggleTodo: (id) =>
     set((state) => {

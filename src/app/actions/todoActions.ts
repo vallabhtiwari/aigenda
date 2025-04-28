@@ -70,7 +70,7 @@ Latitude:${latitude}, Longitude:${longitude}
 Weather:
 ${weather}
 
-Generate 4-5 todos. Keep the prompt very short and to the point.`;
+Generate 4-5 todos. Keep the prompt very short and to the point. Don't suggest todos which are already there.`;
     const response = await ai.models.generateContent({
       model: process.env.GEMINI_MODEL!,
       contents: prompt,
