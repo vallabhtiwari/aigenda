@@ -5,6 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { prisma } from "@/lib/db";
 import { GoogleGenAI, Type } from "@google/genai";
 import { SYSTEM_PROMPT } from "@/lib/prompts";
+import { getWeatherByLocation } from "@/lib/weather";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -59,17 +60,20 @@ export async function generatedSuggestedTodos({
       )
       .join("\n");
 
+    const weather = await getWeatherByLocation({ latitude, longitude });
     const prompt = `These are user's recent todos:
-    ${todos}.
-    
-    This is user's current location:
-    Latitude:${latitude}, Longitude:${longitude}
-    
-    Generate 3 todos.`;
+${todos}.
 
+This is user's current location:
+Latitude:${latitude}, Longitude:${longitude}
+---------------------------------------------
+Weather:
+${weather}
+
+Generate 4-5 todos. Keep the prompt very short and to the point.`;
     const response = await ai.models.generateContent({
       model: process.env.GEMINI_MODEL!,
-      contents: "",
+      contents: prompt,
       config: {
         systemInstruction: SYSTEM_PROMPT,
         temperature: 1.2,
@@ -97,7 +101,18 @@ export async function generatedSuggestedTodos({
         },
       },
     });
-    console.log(response.text);
+    const data = JSON.parse(response.text || "[]");
+    const suggestedTodos = data.map(
+      (item: { item: { prompt: string; title: string } }) => ({
+        ...item,
+        id: crypto.randomUUID(),
+        complete: false,
+        createdAt: null,
+        updatedAt: null,
+        userEmail: null,
+      })
+    );
+    return suggestedTodos;
   } catch (err) {
     console.log("Failed to generate suggestions", err);
     return { error: "Something went wrong. Please try again", todos: [] };
