@@ -75,7 +75,9 @@ export function TodoItem({ todo }: { todo: Todo }) {
       />
       <div className="w-full flex justify-between items-center">
         <div className="flex flex-col">
-          <span>{todo.prompt}</span>
+          <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent animate-pulse">
+            {todo.prompt}
+          </span>
           <span
             className={cn(
               todo.complete ? "line-through text-muted" : "text-primary",

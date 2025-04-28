@@ -45,14 +45,14 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
       (!suggestedTodos || suggestedTodos.length === 0) ? (
         <p className="text-muted text-xl p-4 text-center">No todos yet!</p>
       ) : (
-        <>
+        <div className="max-h-150 overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
           {todos.map((todo) => (
             <TodoItem key={todo.id} todo={todo} />
           ))}
           {suggestedTodos?.map((todo) => (
             <TodoItem key={todo.id} todo={todo} />
           ))}
-        </>
+        </div>
       )}
     </>
   );
