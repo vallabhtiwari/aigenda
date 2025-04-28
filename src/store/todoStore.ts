@@ -4,10 +4,12 @@ import { sortTodos } from "@/lib/utils";
 
 export type TodoState = {
   todos: Todo[];
+  suggestedTodos: Todo[] | null;
+  editingTodo: Todo | null;
 };
 export type TodoActions = {
-  editingTodo: Todo | null;
   setInitialTodos: (todos: Todo[]) => void;
+  setSuggestedTodos: (todos: Todo[]) => void;
   setEditingTodo: (todo: Todo | null) => void;
   addTodo: (todo: Todo) => void;
   updateTodo: (todo: Todo) => void;
@@ -21,7 +23,9 @@ export type TodoStore = TodoState & TodoActions;
 export const useTodoStore = create<TodoStore>((set) => ({
   todos: [],
   editingTodo: null,
+  suggestedTodos: [],
   setInitialTodos: (todos) => set({ todos: todos.sort(sortTodos) }),
+  setSuggestedTodos: (todos) => set({ suggestedTodos: todos.sort(sortTodos) }),
   setEditingTodo: (todo) => set({ editingTodo: todo }),
   addTodo: (todo) =>
     set((state) => ({
