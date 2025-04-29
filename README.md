@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 AIgenda – Smart Todo App
 
-## Getting Started
+A smart todo app powered by AI suggestions, real-time location awareness, weather context, and mood input. Plan your day smarter with AIgenda.
 
-First, run the development server:
+![Screenshot](./public/aigenda.png) <!-- Replace with actual path -->
+
+---
+
+## ✨ Features
+
+- ✅ Manage todos with simple UX (add, complete, delete)
+- 🤖 AI-powered suggestions based on:
+  - Current todos
+  - Location (via Geolocation API)
+  - Weather (OpenWeatherMap)
+  - Mood input (How’s your day?)
+- 📍 Auto Location detection
+- 🔐 Authentication using `next-auth`
+- 💄 Beautiful UI with `shadcn/ui` and TailwindCSS
+- ⚡ State management via `zustand`
+
+---
+
+## 🧱 Built With
+
+- **Next.js** – Fullstack React Framework
+- **Zustand** – Lightweight global state manager
+- **NextAuth.js** – Authentication
+- **@google/genai** – Generate intelligent suggestions
+- **Shadcn/UI** – Modern and accessible UI components
+- **OpenWeatherMap API** – Context-aware suggestions based on current weather
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/vallabhtiwari/aigenda.git
+cd aigenda
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set up environment variables
 
-## Learn More
+```bash
+DATABASE_URL="xxxx"
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=xxxx
+GEMINI_API_KEY="xxxx"
+GEMINI_MODEL="model-name"
+OPENWEATHERMAP_API_KEY="xxxx"
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Intialize db
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm prisma migrate dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 6. Run the development server
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm prisma migrate dev
+```
