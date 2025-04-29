@@ -4,7 +4,7 @@ import { sortTodos } from "@/lib/utils";
 
 export type TodoState = {
   todos: Todo[];
-  suggestedTodos: Todo[] | null;
+  suggestedTodos: Todo[];
   editingTodo: Todo | null;
 };
 export type TodoActions = {
