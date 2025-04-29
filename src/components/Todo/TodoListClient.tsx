@@ -8,18 +8,22 @@ import { useTodoStore } from "@/store/todoStore";
 import { generatedSuggestedTodos } from "@/app/actions/todoActions";
 import { getDistanceFromLatLonInMeters } from "@/lib/utils";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
+  const { status } = useSession();
   const previousLocationRef = useRef<{
     latitude: number;
     longitude: number;
   } | null>(null);
   const { todos, setInitialTodos, suggestedTodos, setSuggestedTodos } =
     useTodoStore();
+
   useEffect(() => {
     setInitialTodos(initialTodos);
   }, [initialTodos, setInitialTodos]);
 
   useEffect(() => {
+    if (status !== "authenticated") return;
     let watcher: number;
     async function fetchSuggestions() {
       try {
@@ -61,7 +65,7 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
     return () => {
       if (watcher) navigator.geolocation.clearWatch(watcher);
     };
-  }, [suggestedTodos, setSuggestedTodos]);
+  }, [status, suggestedTodos, setSuggestedTodos]);
 
   return (
     <>
