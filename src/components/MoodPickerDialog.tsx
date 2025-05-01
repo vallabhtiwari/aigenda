@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { Smile, Meh, Frown, Angry, PartyPopper } from "lucide-react";
 import { useTodoStore } from "@/store/todoStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Mood } from "@/lib/types";
 import { useSession } from "next-auth/react";
@@ -23,7 +23,13 @@ const MOOD_ICON_MAP: Record<string, React.JSX.Element> = {
 export function MoodPickerDailog() {
   const { mood, setMood } = useTodoStore();
   const { status } = useSession();
-  const [open, setOpen] = useState(!(status && mood));
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (status === "authenticated" && !mood) setOpen(true);
+    else setOpen(false);
+  }, [status, mood]);
+
   const handleSelectMood = (m: Mood) => {
     setMood(m);
     setOpen(false);
