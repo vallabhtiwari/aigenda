@@ -24,3 +24,5 @@ export type NavLinkProps = {
 };
 
 export type AuthCreds = z.infer<typeof AuthSchema>;
+
+export type Mood = "happy" | "sad" | "angry" | "neutral" | "excited";

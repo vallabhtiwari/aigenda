@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import { Todo } from "@/lib/types";
+import { Mood, Todo } from "@/lib/types";
 import { sortTodos } from "@/lib/utils";
 
 export type TodoState = {
   todos: Todo[];
   suggestedTodos: Todo[];
   editingTodo: Todo | null;
+  mood: Mood | null;
 };
 export type TodoActions = {
   setInitialTodos: (todos: Todo[]) => void;
@@ -17,6 +18,7 @@ export type TodoActions = {
   deleteSuggestedTodo: (id: string) => void;
   toggleTodo: (id: string) => void;
   reset: () => void;
+  setMood: (mood: Mood) => void;
 };
 
 export type TodoStore = TodoState & TodoActions;
@@ -25,6 +27,7 @@ export const useTodoStore = create<TodoStore>((set) => ({
   todos: [],
   editingTodo: null,
   suggestedTodos: [],
+  mood: null,
   setInitialTodos: (todos) => set({ todos: todos.sort(sortTodos) }),
   setSuggestedTodos: (todos) => set({ suggestedTodos: todos.sort(sortTodos) }),
   setEditingTodo: (todo) => set({ editingTodo: todo }),
@@ -55,4 +58,5 @@ export const useTodoStore = create<TodoStore>((set) => ({
     }),
 
   reset: () => set({ todos: [], editingTodo: null }),
+  setMood: (mood) => set({ mood: mood }),
 }));
