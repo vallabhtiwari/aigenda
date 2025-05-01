@@ -9,13 +9,14 @@ import { generatedSuggestedTodos } from "@/app/actions/todoActions";
 import { getDistanceFromLatLonInMeters } from "@/lib/utils";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { MoodPickerDailog } from "@/components/MoodPickerDialog";
 export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
   const { status } = useSession();
   const previousLocationRef = useRef<{
     latitude: number;
     longitude: number;
   } | null>(null);
-  const { todos, setInitialTodos, suggestedTodos, setSuggestedTodos } =
+  const { todos, setInitialTodos, suggestedTodos, setSuggestedTodos, mood } =
     useTodoStore();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
   }, [initialTodos, setInitialTodos]);
 
   useEffect(() => {
-    if (status !== "authenticated") return;
+    if (status !== "authenticated" || !mood) return;
     let watcher: number;
     async function fetchSuggestions() {
       try {
@@ -54,7 +55,10 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
               else setSuggestedTodos(suggestions);
             }
           },
-          (error) => console.error("Failed to watch location", error)
+          (error) =>
+            toast.error(
+              "Failed to get location. Please grant location access to fetch smart suggestions."
+            )
         );
       } catch (error) {
         console.error("Failed to fetch AI suggestions", error);
@@ -65,10 +69,11 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
     return () => {
       if (watcher) navigator.geolocation.clearWatch(watcher);
     };
-  }, [status, suggestedTodos, setSuggestedTodos]);
+  }, [status, mood, suggestedTodos, setSuggestedTodos]);
 
   return (
     <>
+      <MoodPickerDailog />
       <TodoForm />
       {todos.length === 0 &&
       (!suggestedTodos || suggestedTodos.length === 0) ? (
