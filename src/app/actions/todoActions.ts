@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { GoogleGenAI, Type } from "@google/genai";
 import { SYSTEM_PROMPT } from "@/lib/prompts";
 import { getWeatherByLocation } from "@/lib/weather";
+import { Mood } from "@/lib/types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -33,9 +34,11 @@ export async function getTodos() {
 export async function generatedSuggestedTodos({
   latitude,
   longitude,
+  mood,
 }: {
   latitude: number;
   longitude: number;
+  mood: Mood | null;
 }) {
   try {
     const session = await getServerSession(authOptions);
@@ -63,11 +66,13 @@ export async function generatedSuggestedTodos({
     const weather = await getWeatherByLocation({ latitude, longitude });
     const prompt = `These are user's recent todos:
 ${todos}.
-
+---------------------------------------------
+This is user's current mood: ${mood || "neutral"}
+---------------------------------------------
 This is user's current location:
 Latitude:${latitude}, Longitude:${longitude}
 ---------------------------------------------
-Weather:
+Weather at user's current location:
 ${weather}
 
 Generate 4-5 todos. Keep the prompt very short and to the point. Don't suggest todos which are already there.`;

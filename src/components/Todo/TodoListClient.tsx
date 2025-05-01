@@ -46,6 +46,7 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
             const suggestions = await generatedSuggestedTodos({
               latitude,
               longitude,
+              mood,
             });
             if (suggestions) {
               if (suggestions.error)
