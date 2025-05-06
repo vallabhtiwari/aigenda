@@ -67,5 +67,5 @@ pnpm prisma migrate dev
 ### 6. Run the development server
 
 ```bash
-pnpm prisma migrate dev
+pnpm run dev
 ```
