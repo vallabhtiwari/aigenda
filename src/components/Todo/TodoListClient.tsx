@@ -16,8 +16,11 @@ export const TodoListClient = ({ initialTodos }: { initialTodos: Todo[] }) => {
     latitude: number;
     longitude: number;
   } | null>(null);
-  const { todos, setInitialTodos, suggestedTodos, setSuggestedTodos, mood } =
-    useTodoStore();
+  const todos = useTodoStore((s) => s.todos);
+  const setInitialTodos = useTodoStore((s) => s.setInitialTodos);
+  const suggestedTodos = useTodoStore((s) => s.suggestedTodos);
+  const setSuggestedTodos = useTodoStore((s) => s.setSuggestedTodos);
+  const mood = useTodoStore((s) => s.mood);
 
   useEffect(() => {
     setInitialTodos(initialTodos);

@@ -21,7 +21,8 @@ const MOOD_ICON_MAP: Record<string, React.JSX.Element> = {
 };
 
 export function MoodPickerDailog() {
-  const { mood, setMood } = useTodoStore();
+  const mood = useTodoStore((s) => s.mood);
+  const setMood = useTodoStore((s) => s.setMood);
   const { status } = useSession();
   const [open, setOpen] = useState(false);
 

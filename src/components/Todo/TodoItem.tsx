@@ -10,13 +10,12 @@ import { toast } from "sonner";
 import { useTodoStore } from "@/store/todoStore";
 
 export function TodoItem({ todo }: { todo: Todo }) {
-  const {
-    setEditingTodo,
-    deleteTodo,
-    toggleTodo,
-    addTodo,
-    deleteSuggestedTodo,
-  } = useTodoStore();
+  const setEditingTodo = useTodoStore((s) => s.setEditingTodo);
+  const deleteTodo = useTodoStore((s) => s.deleteTodo);
+  const toggleTodo = useTodoStore((s) => s.toggleTodo);
+  const addTodo = useTodoStore((s) => s.addTodo);
+  const deleteSuggestedTodo = useTodoStore((s) => s.deleteSuggestedTodo);
+
   const handleToggle = async () => {
     const url = "/api/todos/update";
     try {

@@ -11,7 +11,10 @@ import { Todo } from "@/lib/types";
 import { useTodoStore } from "@/store/todoStore";
 
 export const TodoForm = () => {
-  const { editingTodo, setEditingTodo, updateTodo, addTodo } = useTodoStore();
+  const editingTodo = useTodoStore((s) => s.editingTodo);
+  const setEditingTodo = useTodoStore((s) => s.setEditingTodo);
+  const updateTodo = useTodoStore((s) => s.updateTodo);
+  const addTodo = useTodoStore((s) => s.addTodo);
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
 
